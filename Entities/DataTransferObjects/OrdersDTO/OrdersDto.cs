@@ -10,10 +10,10 @@ namespace Entities.DataTransferObjects
         public int OrderNumber { get; set; }
         public DateTime OrderDate { get; set; }
         public DateTime RequiredDate { get; set; }
-        public DateTime ShipDate { get; set; }
+        public DateTime ShipperDate { get; set; }
         public string Status { get; set; }
         public string Comments { get; set; }
         public int CustomersNumber { get; set; }
-        public ICollection<OrderDetails> OrderDetails { get; set; }
+        public OrderDetails OrderDetails { get; set; }
     }
 }

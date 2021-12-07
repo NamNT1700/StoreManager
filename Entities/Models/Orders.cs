@@ -16,17 +16,14 @@ namespace Entities.Models
         [Required(ErrorMessage = "Required date is required")]
         public DateTime RequiredDate { get; set; }
         [Required(ErrorMessage = "Ship date is required")]
-        public DateTime ShipDate { get; set; }
+        public DateTime ShippedDate { get; set; }
         [Required(ErrorMessage = "Status is required")]
         public string Status { get; set; }
         [Required(ErrorMessage = "Comment date is required")]
         public string Comments { get; set; }
         [Required(ErrorMessage = "CustomersNumber is required")]
         public int CustomersNumber { get; set; }
-
-        [ForeignKey(nameof(Customers))]
-        public int customersNumber { get; set;  }
         public Customers Customers { get; set; }
-        public ICollection<OrderDetails> OrderDetails { get; set; }
+        public OrderDetails OrderDetails { get; set; }
     }
 }

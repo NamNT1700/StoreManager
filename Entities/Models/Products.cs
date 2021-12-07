@@ -27,9 +27,7 @@ namespace Entities.Models
         public string BuyPrice { get; set; }
         [Required(ErrorMessage = "MSRP is required")]
         public string MSRP { get; set; }
-        [ForeignKey(nameof(ProductLines))]
-        public string productLine { get; set; }
         public ProductLines ProductLines { get; set; }
-        public ICollection<OrderDetails> OrderDetails { get; set; }
+        public OrderDetails OrderDetails { get; set; }
     }
 }

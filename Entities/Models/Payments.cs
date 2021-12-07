@@ -10,15 +10,13 @@ namespace Entities.Models
     public class Payments
     {
         [Required(ErrorMessage = "CustomerNumber is required")]
-        public string CustomersNumber { get; set; }
+        public int CustomersNumber { get; set; }
         [Required(ErrorMessage = "CheckNumber is required")]
-        public string CheckNumber { get; set; }
+        public int CheckNumber { get; set; }
         [Required(ErrorMessage = "PaymentDate is required")]
-        public string PaymentDate { get; set; }
+        public DateTime PaymentDate { get; set; }
         [Required(ErrorMessage = "Amount is required")]
-        public string Amount { get; set; }
-        [ForeignKey(nameof(Customers))]
-        public int customersNumber { get; set; }
+        public int Amount { get; set; }
         public Customers Customers { get; set; }
     }
 }

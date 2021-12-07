@@ -13,5 +13,20 @@ namespace Repository
             : base(repositoryContext)
         {
         }
+
+        public void CreateOrderDetails(OrderDetails orderDetails)
+        {
+            Create(orderDetails);
+        }
+
+        public void DeleteOrderDetails(OrderDetails orderDetails)
+        {
+            Delete(orderDetails);
+        }
+
+        public void UpdateOrderDetails(OrderDetails orderDetails)
+        {
+            Update(orderDetails);
+        }
     }
 }

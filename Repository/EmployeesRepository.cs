@@ -13,5 +13,20 @@ namespace Repository
             : base(repositoryContext)
         {
         }
+
+        public void CreateEmployees(Employees employees)
+        {
+            Create(employees);
+        }
+
+        public void DeleteEmployees(Employees employees)
+        {
+            Delete(employees);
+        }
+
+        public void UpdateEmployees(Employees employees)
+        {
+            Update(employees);
+        }
     }
 }

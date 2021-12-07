@@ -17,7 +17,7 @@ namespace Entities.Models
         public string HtmlDescription { get; set; }
         [Required(ErrorMessage = "Image is required")]
         public string Image { get; set; }
-        public ICollection<Products> Products { get; set; }
+        public Products Products { get; set; }
 
     }
 }

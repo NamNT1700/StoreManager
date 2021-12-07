@@ -7,5 +7,8 @@ namespace Store
 {
     public interface IEmployeesRepository: IRepositoryBase<Employees>
     {
+        void CreateEmployees(Employees employees);
+        void UpdateEmployees(Employees employees);
+        void DeleteEmployees(Employees employees);
     }
 }

@@ -13,5 +13,20 @@ namespace Repository
             : base(repositoryContext)
         {
         }
+
+        public void CreatePayments(Payments payments)
+        {
+            Create(payments);
+        }
+
+        public void DeletePayments(Payments payments)
+        {
+            Delete(payments);
+        }
+
+        public void UpdatePayments(Payments payments)
+        {
+            Update(payments);
+        }
     }
 }

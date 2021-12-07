@@ -8,10 +8,12 @@ namespace Store
 {
     public interface ICustomersRepository: IRepositoryBase<Customers>
     {
+
         IEnumerable<Customers> GetAllCustomers();
         Customers GetCumstomersByNumber(int CustumersNumber);
         Customers GetCumstomersByPostalCode(Guid PostalCode);
         Customers GetCustomersWithDetails(int CustumersNumber);
+        //int GetNumberForCustomers(Customers CustumersNumber);
 
         void CreateCustomers(Customers customers);
         void UpdateCustomers(Customers customers);

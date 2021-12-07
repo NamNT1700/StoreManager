@@ -9,16 +9,21 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
-    public class CustomersRepository: RepositoryBase<Customers>, ICustomersRepository
+    public class CustomersRepository : RepositoryBase<Customers>, ICustomersRepository
     {
+        
+
         public CustomersRepository(RepositoryContext repositoryContext)
             : base(repositoryContext)
         {
         }
-
         public void CreateCustomers(Customers customers)
         {
             Create(customers);
+        }
+        public void UpdateCustomers(Customers customers)
+        {
+            Update(customers);
         }
 
         public void DeleteCustomers(Customers customers)
@@ -29,7 +34,7 @@ namespace Repository
         public IEnumerable<Customers> GetAllCustomers()
         {
             return FindAll()
-                .OrderBy(ow => ow.Name)
+                .OrderBy(ow => ow.CustomersName)
                 .ToList();
         }
 
@@ -52,9 +57,6 @@ namespace Repository
         .FirstOrDefault();
         }
 
-        public void UpdateCustomers(Customers customers)
-        {
-            Update(customers);
-        }
+        
     }
 }

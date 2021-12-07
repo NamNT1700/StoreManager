@@ -5,11 +5,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using Store;
+using Entities.Models;
 
 namespace Repository
 {
     public abstract class RepositoryBase<T> : IRepositoryBase<T> where T : class
     {
+        
         protected RepositoryContext RepositoryContext { get; set; }
         public RepositoryBase(RepositoryContext repositoryContext)
         {
@@ -25,6 +27,7 @@ namespace Repository
         }
         public void Create(T entity)
         {
+            
             this.RepositoryContext.Set<T>().Add(entity);
         }
         public void Update(T entity)

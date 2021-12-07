@@ -13,5 +13,20 @@ namespace Repository
             : base(repositoryContext)
         {
         }
+
+        public void CreateProducts(Products products)
+        {
+            Create(products);
+        }
+
+        public void DeleteProducts(Products products)
+        {
+            Delete(products);
+        }
+
+        public void UpdateProducts(Products products)
+        {
+            Update(products);
+        }
     }
 }

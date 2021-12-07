@@ -15,9 +15,24 @@ namespace Repository
         {
         }
 
+        public void CreateOrders(Orders orders)
+        {
+            Create(orders);
+        }
+
+        public void DeleteOrders(Orders orders)
+        {
+            Delete(orders);
+        }
+
         public IEnumerable<Orders> OrdersByCustomers(int customersNumber)
         {
             return FindByCondition(a => a.CustomersNumber.Equals(customersNumber)).ToList();
+        }
+
+        public void UpdateOrders(Orders orders)
+        {
+            Update(orders);
         }
     }
 }

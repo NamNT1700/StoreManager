@@ -7,5 +7,9 @@ namespace Store
 {
     public interface IOfficesRepository: IRepositoryBase<Offices>
     {
+        void CreateOffices(Offices offices);
+        void UpdateOffices(Offices offices);
+        void DeleteOffices(Offices offices);
+        Offices GetOfficesByOfficesCode(string OfficesCode);
     }
 }

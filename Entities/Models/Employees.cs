@@ -10,7 +10,7 @@ namespace Entities.Models
     public class Employees
     {
         [Required(ErrorMessage = "Employees Number is required")]
-        public int EmployeesNumber { get; set; }
+        public int EmployeeNumber { get; set; }
         [Required(ErrorMessage = "Last name is required")]
         public string LastName { get; set; }
         [Required(ErrorMessage = "First name is required")]
@@ -25,12 +25,9 @@ namespace Entities.Models
         public string ReportsTo { get; set; }
         [Required(ErrorMessage = "JobTitle is required")]
         public string JobTitle { get; set; }
-
-        [ForeignKey(nameof(Offices))]
-        public string officeCode { get; set; }
         public Offices Offices { get; set; }
-        [ForeignKey(nameof(Employees))]
-        public int EmployeesNumber2 { get; set; }
-        public Employees Employees2 { get; set; }
+        public ICollection<Customers> Customers { get; set; }
+
+
     }
 }
