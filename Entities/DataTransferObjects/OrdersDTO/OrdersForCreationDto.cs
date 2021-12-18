@@ -15,14 +15,12 @@ namespace Entities.DataTransferObjects.OrdersDTO
         [Required(ErrorMessage = "Required date is required")]
         public DateTime RequiredDate { get; set; }
         [Required(ErrorMessage = "Ship date is required")]
-        public DateTime ShipperDate { get; set; }
+        public DateTime ShippedDate { get; set; }
         [Required(ErrorMessage = "Status is required")]
         public string Status { get; set; }
         [Required(ErrorMessage = "Comment date is required")]
         public string Comments { get; set; }
         [Required(ErrorMessage = "CustomersNumber is required")]
-        public int CustomersNumber { get; set; }
-        //public Customers Customers { get; set; }
-        //public OrderDetails OrderDetails { get; set; }
+        public int CustomersFK { get; set; }
     }
 }

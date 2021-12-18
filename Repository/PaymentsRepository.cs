@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Entities.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -14,9 +17,9 @@ namespace Repository
         {
         }
 
-        public void CreatePayments(Payments payments)
+        public async Task CreatePayments(Payments payments)
         {
-            Create(payments);
+          await Task.Run(()=>  Create(payments));
         }
 
         public void DeletePayments(Payments payments)
@@ -24,9 +27,14 @@ namespace Repository
             Delete(payments);
         }
 
-        public void UpdatePayments(Payments payments)
+        public async Task<Payments> GetPaymentByNumber(int customerID)
         {
-            Update(payments);
+            return await FindByCondition(x => x.CustomersIdFK.Equals(customerID)).FirstOrDefaultAsync();
+        }
+
+        public async Task UpdatePayments(Payments payments)
+        {
+            await Task.Run(() => Update(payments));
         }
     }
 }

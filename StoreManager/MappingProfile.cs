@@ -33,6 +33,7 @@ namespace StoreManager
             CreateMap<OfficesForUpdateDto, Offices>();
 
             CreateMap<Employees, EmployeesDto>();
+            CreateMap<EmployeesDto, Employees>();
             CreateMap<EmployeesForCreationDto, Employees>();
             CreateMap<EmployeesForUpdateDto, Employees>();
 

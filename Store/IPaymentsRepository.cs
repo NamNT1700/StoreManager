@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Entities.Models;
 
 namespace Store
 {
     public interface IPaymentsRepository: IRepositoryBase<Payments>
     {
-        void CreatePayments(Payments payments);
-        void UpdatePayments(Payments payments);
+        Task CreatePayments(Payments payments);
+        Task UpdatePayments(Payments payments);
         void DeletePayments(Payments payments);
+        Task<Payments> GetPaymentByNumber(int customerID);
     }
 }

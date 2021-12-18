@@ -10,9 +10,9 @@ namespace Entities.Models
     public class OrderDetails
     {
         [Required(ErrorMessage = "OrderNumber is required")]
-        public int OrderNumber { get; set; }
+        public int OrderNumberFK { get; set; }
         [Required(ErrorMessage = "ProductCode is required")]
-        public Guid ProductCode { get; set; }
+        public Guid ProductCodeFK { get; set; }
         [Required(ErrorMessage = "QuantityOrdered is required")]
         public int QuantityOrdered { get; set; }
         [Required(ErrorMessage = "Price is required")]

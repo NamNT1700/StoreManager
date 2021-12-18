@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Text;
 using Entities.Models;
 using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -15,9 +17,9 @@ namespace Repository
         {
         }
 
-        public void CreateOrders(Orders orders)
+        public async Task CreateOrders(Orders orders)
         {
-            Create(orders);
+          await Task.Run(()=>  Create(orders));
         }
 
         public void DeleteOrders(Orders orders)
@@ -25,14 +27,20 @@ namespace Repository
             Delete(orders);
         }
 
-        public IEnumerable<Orders> OrdersByCustomers(int customersNumber)
+        public async Task<Orders> GetOrderByNumber(int orderNumber)
         {
-            return FindByCondition(a => a.CustomersNumber.Equals(customersNumber)).ToList();
+            return await FindByCondition(x => x.OrderNumber.Equals(orderNumber))
+           .FirstOrDefaultAsync();
         }
 
-        public void UpdateOrders(Orders orders)
+        public IEnumerable<Orders> OrdersByCustomers(int customersNumber)
         {
-            Update(orders);
+            return FindByCondition(a => a.CustomersFK.Equals(customersNumber)).ToList();
+        }
+
+        public async Task UpdateOrders(Orders orders)
+        {
+            await Task.Run(() => Update(orders));
         }
     }
 }

@@ -26,7 +26,7 @@ namespace StoreManager.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public IActionResult CreateEmployees([FromBody] EmployeesForCreationDto employees)
+        public async Task<IActionResult> CreateEmployees([FromBody] EmployeesForCreationDto employees)
         {
 
             try
@@ -45,9 +45,10 @@ namespace StoreManager.Controllers
 
                 var employeesEntity = _mapper.Map<Employees>(employees);
 
-                _repository.Employees.CreateEmployees(employeesEntity);
-                _repository.Save();
+               await _repository.Employees.CreateEmployees(employeesEntity);
 
+                _repository.Save();
+                
                 var createdEmployees = _mapper.Map<EmployeesDto>(employeesEntity);
 
                 return Ok(createdEmployees);
@@ -55,7 +56,39 @@ namespace StoreManager.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside CreateEmployees action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Something went wrong inside CreateEmployees action: {ex.Message}");
+            }
+        }
+        [HttpPut("{employeeID}")]
+        public async Task<IActionResult> UpdateEmployees(int employeeID, [FromBody] EmployeesForUpdateDto employees)
+        {
+            try
+            {
+                if (employees == null)
+                {
+                    _logger.LogError("employees object sent from client is null.");
+                    return BadRequest("employees object is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Invalid employees object sent from client.");
+                    return BadRequest("Invalid model object");
+                }
+                var employeesEntity = await _repository.Employees.GetEmployeeByNumber(employeeID);
+                if (employeesEntity == null)
+                {
+                    _logger.LogError($"employees with number: {employeeID}, hasn't been found in db.");
+                    return NotFound();
+                }
+                 _mapper.Map(employees, employeesEntity);
+                await _repository.Employees.UpdateEmployees(employeesEntity);
+                _repository.Save();
+                return Ok(employeesEntity);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside UpdateEmployees action: {ex.Message}");
+                return StatusCode(500, $"Something went wrong inside UpdateEmployees action: {ex.Message}");
             }
         }
     }

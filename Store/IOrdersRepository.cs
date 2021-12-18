@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Entities.Models;
 
 namespace Store
@@ -8,8 +9,9 @@ namespace Store
     public interface IOrdersRepository: IRepositoryBase<Orders>
     {
         IEnumerable<Orders> OrdersByCustomers(int customersNumber);
-        void CreateOrders(Orders orders);
-        void UpdateOrders(Orders orders);
+        Task CreateOrders(Orders orders);
+        Task UpdateOrders(Orders orders);
         void DeleteOrders(Orders orders);
+        Task<Orders> GetOrderByNumber(int orderNumber);
     }
 }

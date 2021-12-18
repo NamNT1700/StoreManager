@@ -4,6 +4,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Entities.Models;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -14,9 +17,9 @@ namespace Repository
         {
         }
 
-        public void CreateProducts(Products products)
+        public async Task CreateProducts(Products products)
         {
-            Create(products);
+           await Task.Run( ()=>Create(products));
         }
 
         public void DeleteProducts(Products products)
@@ -24,9 +27,15 @@ namespace Repository
             Delete(products);
         }
 
-        public void UpdateProducts(Products products)
+        public async Task<Products> GetProducttByCode(Guid productCode)
         {
-            Update(products);
+            return await  FindByCondition(x => x.ProductCode.Equals(productCode))
+           .FirstOrDefaultAsync();
+        }
+
+        public async Task UpdateProducts(Products products)
+        {
+            await Task.Run(() => Update(products));
         }
     }
 }

@@ -6,6 +6,7 @@ using System.Text;
 using Store;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using System.Threading.Tasks;
 
 namespace Repository
 {
@@ -17,13 +18,13 @@ namespace Repository
             : base(repositoryContext)
         {
         }
-        public void CreateCustomers(Customers customers)
+        public  async Task CreateCustomers(Customers customers)
         {
-            Create(customers);
+           await Task.Run(()=>  Create(customers));
         }
-        public void UpdateCustomers(Customers customers)
+        public async Task  UpdateCustomers(Customers customers)
         {
-            Update(customers);
+            await Task.Run(() => Update(customers));
         }
 
         public void DeleteCustomers(Customers customers)
@@ -38,21 +39,21 @@ namespace Repository
                 .ToList();
         }
 
-        public Customers GetCumstomersByNumber(int CustumersNumber)
+        public async Task<Customers> GetCumstomersByID(int CustumersID)
         {
-            return FindByCondition(customers => customers.CustomersNumber.Equals(CustumersNumber))
-            .FirstOrDefault();
+            return await  FindByCondition(customers => customers.CustomersId.Equals(CustumersID))
+            .FirstOrDefaultAsync();
         }
 
         public Customers GetCumstomersByPostalCode(Guid PostalCode)
         {
-            return FindByCondition(customers => customers.PostalCode.Equals(PostalCode))
+            return  FindByCondition(customers => customers.PostalCode.Equals(PostalCode))
            .FirstOrDefault();
         }
 
-        public Customers GetCustomersWithDetails(int CustumersNumber)
+        public Customers GetCustomersWithDetails(int CustumersID)
         {
-            return FindByCondition(customers => customers.CustomersNumber.Equals(CustumersNumber))
+            return  FindByCondition(customers => customers.CustomersId.Equals(CustumersID))
         .Include(orders => orders.Orders)
         .FirstOrDefault();
         }

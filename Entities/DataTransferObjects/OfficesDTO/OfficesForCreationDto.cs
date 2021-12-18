@@ -1,4 +1,5 @@
-﻿using Entities.Models;
+﻿using Entities.DataTransferObjects.EmployeesDTO;
+using Entities.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -9,7 +10,7 @@ namespace Entities.DataTransferObjects.OfficesDTO
     public class OfficesForCreationDto
     {
         [Required(ErrorMessage = "OfficeCode is required")]
-        public string OfficeCode { get; set; }
+        public int OfficeId { get; set; }
         [Required(ErrorMessage = "City is required")]
         public string City { get; set; }
         [Required(ErrorMessage = "Phone number is required")]
@@ -21,10 +22,8 @@ namespace Entities.DataTransferObjects.OfficesDTO
         [Required(ErrorMessage = "Country is required")]
         public string Country { get; set; }
         [Required(ErrorMessage = "PostalCode is required")]
-        public string PostalCode { get; set; }
+        public Guid PostalCode { get; set; }
         [Required(ErrorMessage = "Territory is required")]
         public string Territory { get; set; }
-
-       //public ICollection<Employees> Employees { get; set; }
     }
 }

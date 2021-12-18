@@ -13,7 +13,7 @@ namespace Entities.DataTransferObjects.ProductDTO
         [Required(ErrorMessage = "ProductName is required")]
         public string ProductName { get; set; }
         [Required(ErrorMessage = "ProductLine is required")]
-        public string ProductLine { get; set; }
+        public int ProductIdFK { get; set; }
         [Required(ErrorMessage = "ProductScale is required")]
         public string ProductScale { get; set; }
         [Required(ErrorMessage = "ProductVendor is required")]
@@ -26,7 +26,7 @@ namespace Entities.DataTransferObjects.ProductDTO
         public string BuyPrice { get; set; }
         [Required(ErrorMessage = "MSRP is required")]
         public string MSRP { get; set; }
-        //public ProductLines ProductLines { get; set; }
-       // public OrderDetails OrderDetails { get; set; }
+       
+
     }
 }

@@ -26,7 +26,7 @@ namespace StoreManager.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public IActionResult CreateOrderdetails([FromBody] OrderDetailsForCreationDto orderdetails)
+        public async Task<IActionResult> CreateOrderdetails([FromBody] OrderDetailsForCreationDto orderdetails)
         {
 
             try
@@ -45,7 +45,7 @@ namespace StoreManager.Controllers
 
                 var orderdetailsEntity = _mapper.Map<OrderDetails>(orderdetails);
 
-                _repository.OrderDetails.CreateOrderDetails(orderdetailsEntity);
+                await _repository.OrderDetails.CreateOrderDetails(orderdetailsEntity);
                 _repository.Save();
 
                 var createdOrderDetails = _mapper.Map<OrderDetailsDto>(orderdetailsEntity);
@@ -55,7 +55,41 @@ namespace StoreManager.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside CreateOrderdetails action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Something went wrong inside CreateOrderdetails action: {ex.Message}");
+            }
+        }
+
+        [HttpPut("{orderNumber}")]
+        public async Task<IActionResult> UpdateOrderDetails(int orderNumber, [FromBody] OrderDetailsForUpdateDto orderdetail)
+        {
+            try
+            {
+                if (orderdetail == null)
+                {
+                    _logger.LogError("orderdetail object sent from client is null.");
+                    return BadRequest("orderdetail object is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Invalid orderdetail object sent from client.");
+                    return BadRequest("Invalid model object");
+                }
+                var orderdetailEntity = await _repository.OrderDetails.GetOrderByNumber(orderNumber);
+
+                if (orderdetailEntity == null)
+                {
+                    _logger.LogError($"orderdetail with orderNumber: {orderNumber}, hasn't been found in db.");
+                    return NotFound();
+                }
+                _mapper.Map(orderdetail, orderdetailEntity);
+                await _repository.OrderDetails.UpdateOrderDetails(orderdetailEntity);
+                _repository.Save();
+                return Ok(orderdetailEntity);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside UpdateOrderDetails action: {ex.Message}");
+                return StatusCode(500, $"Something went wrong inside UpdateOrderDetails action: {ex.Message}");
             }
         }
     }

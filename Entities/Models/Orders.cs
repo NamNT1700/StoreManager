@@ -22,8 +22,8 @@ namespace Entities.Models
         [Required(ErrorMessage = "Comment date is required")]
         public string Comments { get; set; }
         [Required(ErrorMessage = "CustomersNumber is required")]
-        public int CustomersNumber { get; set; }
-        public Customers Customers { get; set; }
-        public OrderDetails OrderDetails { get; set; }
+        public int CustomersFK { get; set; }
+        virtual public Customers Customers { get; set; }
+        virtual public OrderDetails OrderDetails { get; set; }
     }
 }

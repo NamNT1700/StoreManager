@@ -12,7 +12,7 @@ namespace Entities.Models
     public class Customers
     {
         [Required(ErrorMessage = "CustomersNumber is required")]
-        public int CustomersNumber { get; set; }
+        public int CustomersId { get; set; }
         [Required(ErrorMessage = "Name is required")]
         public string CustomersName { get; set; }
         [Required(ErrorMessage = "LastName is required")]
@@ -22,7 +22,6 @@ namespace Entities.Models
         [Required(ErrorMessage = "PhoneNumber is required")]
         public string Phone { get; set; }
         [Required(ErrorMessage = "Address is required")]
-        [StringLength(100, ErrorMessage = "Address cannot be longer than 100 characters")]
         public string Address { get; set; }
         [Required(ErrorMessage = "City is required")]
         public string City { get; set; }
@@ -32,7 +31,7 @@ namespace Entities.Models
         [Required(ErrorMessage = "Country is required")]
         public string Country { get; set; }
         [Required(ErrorMessage = "SalesRepEmployeeNumber is required")]
-        public int SalesRepEmployeeNumber { get; set; }
+        public int EmployeeIdFK { get; set; }
         [Required(ErrorMessage = "Credit is required")]
         public int CreditLimit { get; set; }
         public ICollection<Orders> Orders { get; set; }

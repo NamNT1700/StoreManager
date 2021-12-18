@@ -7,13 +7,10 @@ namespace Entities.DataTransferObjects.ProductLinesDTO
 {
     public class ProductLinesDto
     {
-     
-        public string ProductLine { get; set; }
-      
+
+        public int ProductId { get; set; }
         public string TextDescription { get; set; }
-     
         public string HtmlDescription { get; set; }
-       
         public string Image { get; set; }
         public ICollection<Products> Products { get; set; }
     }

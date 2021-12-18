@@ -9,16 +9,14 @@ namespace Entities.DataTransferObjects.OrdersDetailsDTO
     public class OrderDetailsForCreationDto
     {
         [Required(ErrorMessage = "OrderNumber is required")]
-        public int OrderNumber { get; set; }
+        public int OrderNumberFK { get; set; }
         [Required(ErrorMessage = "ProductCode is required")]
-        public Guid ProductCode { get; set; }
+        public Guid ProductCodeFK { get; set; }
         [Required(ErrorMessage = "QuantityOrdered is required")]
         public int QuantityOrdered { get; set; }
         [Required(ErrorMessage = "Price is required")]
         public int PriceEach { get; set; }
         [Required(ErrorMessage = "OrderLineNumber is required")]
         public int OrderLineNumber { get; set; }
-        //public Products Products { get; set; }
-        //public Orders Orders { get; set; }
     }
 }

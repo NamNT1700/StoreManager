@@ -43,7 +43,7 @@ namespace StoreManager.Extensions
         {
             string connectionString = config["mysqlconnection:connectionString"];
             services.AddDbContext<RepositoryContext>
-                (o => o.UseMySql(connectionString, MySqlServerVersion.LatestSupportedServerVersion));
+                (o => o.UseMySql(connectionString, MySqlServerVersion.LatestSupportedServerVersion, b => b.MigrationsAssembly("StoreManager")));
         }
         public static void ConfigureRepositoryWrapper(this IServiceCollection services)
         {

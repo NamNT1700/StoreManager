@@ -27,7 +27,7 @@ namespace StoreManager.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public IActionResult CreateOrders([FromBody] OrdersForCreationDto orders)
+        public async Task<IActionResult> CreateOrders([FromBody] OrdersForCreationDto orders)
         {
 
             try
@@ -46,7 +46,7 @@ namespace StoreManager.Controllers
 
                 var ordersEntity = _mapper.Map<Orders>(orders);
 
-                _repository.Orders.CreateOrders(ordersEntity);
+                await _repository.Orders.CreateOrders(ordersEntity);
                 _repository.Save();
 
                 var createdOrders = _mapper.Map<OrdersDto>(ordersEntity);
@@ -56,7 +56,40 @@ namespace StoreManager.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside CreateOrders action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Something went wrong inside CreateOrders action: {ex.Message}");
+            }
+        }
+
+        [HttpPut("{orderNumber}")]
+        public async Task<IActionResult> UpdateOrder(int orderNumber, [FromBody] OrdersForUpdateDto order)
+        {
+            try
+            {
+                if (order == null)
+                {
+                    _logger.LogError("order object sent from client is null.");
+                    return BadRequest("order object is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Invalid order object sent from client.");
+                    return BadRequest("Invalid model object");
+                }
+                var orderEntity = await _repository.Orders.GetOrderByNumber(orderNumber);
+                if (orderEntity == null)
+                {
+                    _logger.LogError($"order with number: {orderNumber}, hasn't been found in db.");
+                    return NotFound();
+                }
+                _mapper.Map(order, orderEntity);
+                await _repository.Orders.UpdateOrders(orderEntity);
+                _repository.Save();
+                return Ok(orderEntity);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside UpdateOrder action: {ex.Message}");
+                return StatusCode(500, $"Something went wrong inside UpdateOrder action: {ex.Message}");
             }
         }
     }

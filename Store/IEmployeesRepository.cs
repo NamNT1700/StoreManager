@@ -2,13 +2,17 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Store
 {
     public interface IEmployeesRepository: IRepositoryBase<Employees>
     {
-        void CreateEmployees(Employees employees);
-        void UpdateEmployees(Employees employees);
+        Task CreateEmployees(Employees employees);
+        Task UpdateEmployees(Employees employees);
         void DeleteEmployees(Employees employees);
+        Task<Employees> GetEmployeeByNumber(int employeeID);
+        public IEnumerable<Employees> GetAllEmployees();
+        
     }
 }

@@ -10,7 +10,7 @@ namespace Entities.Models
     public class Payments
     {
         [Required(ErrorMessage = "CustomerNumber is required")]
-        public int CustomersNumber { get; set; }
+        public int CustomersIdFK { get; set; }
         [Required(ErrorMessage = "CheckNumber is required")]
         public int CheckNumber { get; set; }
         [Required(ErrorMessage = "PaymentDate is required")]

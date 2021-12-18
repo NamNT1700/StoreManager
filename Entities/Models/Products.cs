@@ -14,7 +14,7 @@ namespace Entities.Models
         [Required(ErrorMessage = "ProductName is required")]
         public string ProductName { get; set; }
         [Required(ErrorMessage = "ProductLine is required")]
-        public string ProductLine { get; set; }
+        public int ProductIdFK { get; set; }
         [Required(ErrorMessage = "ProductScale is required")]
         public string ProductScale { get; set; }
         [Required(ErrorMessage = "ProductVendor is required")]

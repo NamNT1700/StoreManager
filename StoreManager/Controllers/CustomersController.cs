@@ -26,7 +26,7 @@ namespace StoreManager.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public IActionResult CreateCustomers([FromBody] CustomersForCreationDto customers)
+        public async Task<IActionResult> CreateCustomers([FromBody] CustomersForCreationDto customers)
         {
 
             try
@@ -45,7 +45,7 @@ namespace StoreManager.Controllers
 
                 var customersEntity = _mapper.Map<Customers>(customers);
 
-                _repository.Customers.CreateCustomers(customersEntity);
+                await _repository.Customers.CreateCustomers(customersEntity);
                 _repository.Save();
 
                 var createdCustomers = _mapper.Map<CustomersDto>(customersEntity);
@@ -55,7 +55,40 @@ namespace StoreManager.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside CreateCustomers action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Something went wrong inside CreateCustomers action: {ex.Message}");
+            }
+        }
+
+        [HttpPut("{customerID}")]
+        public async Task<IActionResult> UpdateCustomer(int customerID, [FromBody] CustomersForUpdateDto customer)
+        {
+            try
+            {
+                if (customer == null)
+                {
+                    _logger.LogError("customer object sent from client is null.");
+                    return BadRequest("customer object is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Invalid customer object sent from client.");
+                    return BadRequest("Invalid model object");
+                }
+                var customerEntity = await _repository.Customers.GetCumstomersByID(customerID);
+                if (customerEntity == null)
+                {
+                    _logger.LogError($"customer with number: {customerID}, hasn't been found in db.");
+                    return NotFound();
+                }
+                _mapper.Map(customer, customerEntity);
+                await _repository.Customers.UpdateCustomers(customerEntity);
+                _repository.Save();
+                return Ok(customerEntity);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside UpdateCustomer action: {ex.Message}");
+                return StatusCode(500, $"Something went wrong inside UpdateCustomer action: {ex.Message}");
             }
         }
     }

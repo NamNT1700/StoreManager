@@ -26,7 +26,7 @@ namespace StoreManager.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public IActionResult CreatePayment([FromBody] PaymentForCreationDto payment)
+        public async Task<IActionResult> CreatePayment([FromBody] PaymentForCreationDto payment)
         {
 
             try
@@ -45,7 +45,7 @@ namespace StoreManager.Controllers
 
                 var paymentEntity = _mapper.Map<Payments>(payment);
 
-                _repository.Payments.CreatePayments(paymentEntity);
+                await _repository.Payments.CreatePayments(paymentEntity);
                 _repository.Save();
 
                 var createdPayment = _mapper.Map<PaymentDto>(paymentEntity);
@@ -55,7 +55,40 @@ namespace StoreManager.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside CreatePayment action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Something went wrong inside CreatePayment action: {ex.Message}");
+            }
+        }
+
+        [HttpPut("{customerID}")]
+        public async Task<IActionResult> UpdatePayments(int customerID, [FromBody] PaymentForUpdateDto payment)
+        {
+            try
+            {
+                if (payment == null)
+                {
+                    _logger.LogError("payment object sent from client is null.");
+                    return BadRequest("payment object is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Invalid payment object sent from client.");
+                    return BadRequest("Invalid model object");
+                }
+                var paymentEntity = await _repository.Payments.GetPaymentByNumber(customerID);
+                if (paymentEntity == null)
+                {
+                    _logger.LogError($"payment with customerNumber: {customerID}, hasn't been found in db.");
+                    return NotFound();
+                }
+                _mapper.Map(payment, paymentEntity);
+                await _repository.Payments.UpdatePayments(paymentEntity);
+                _repository.Save();
+                return Ok(paymentEntity);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside UpdatePayments action: {ex.Message}");
+                return StatusCode(500, $"Something went wrong inside UpdatePayments action: {ex.Message}");
             }
         }
     }

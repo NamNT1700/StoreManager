@@ -3,6 +3,7 @@ using Entities.DataTransferObjects.OfficesDTO;
 using Entities.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Store;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace StoreManager.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public IActionResult CreateOffice([FromBody] OfficesForCreationDto offices)
+        public async Task<IActionResult>  CreateOffice([FromBody] OfficesForCreationDto offices)
         {
 
             try
@@ -45,7 +46,7 @@ namespace StoreManager.Controllers
 
                 var officesEntity = _mapper.Map<Offices>(offices);
 
-                _repository.Offices.CreateOffices(officesEntity);
+               await _repository.Offices.CreateOffices(officesEntity);
                 _repository.Save();
 
                 var createdOffices = _mapper.Map<OfficesDto>(officesEntity);
@@ -55,40 +56,84 @@ namespace StoreManager.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside CreateOffices action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Something went wrong inside CreateOffices action: {ex.Message}");
             }
         }
-        [HttpPut]
-        public IActionResult UpdateCustomer(string OfficesCode, [FromBody] OfficesForUpdateDto offices)
+        [HttpPut("{OfficesID}")]
+        public async Task<IActionResult> UpdateOffices(int OfficesID, [FromBody] OfficesForUpdateDto offices)
         {
             try
             {
+                var office = await _repository.Offices.GetEmployeesInOfficeAsync(OfficesID);
                 if (offices == null)
                 {
-                    _logger.LogError("customers object sent from client is null.");
-                    return BadRequest("customers object is null");
+                    _logger.LogError("offices object sent from client is null.");
+                    return BadRequest("offices object is null");
                 }
                 if (!ModelState.IsValid)
                 {
-                    _logger.LogError("Invalid customers object sent from client.");
+                    _logger.LogError("Invalid offices object sent from client.");
                     return BadRequest("Invalid model object");
                 }
-                var officesEntity = _repository.Offices.GetOfficesByOfficesCode(OfficesCode);
+                var officesEntity = await _repository.Offices.GetOfficesByOfficesCode(OfficesID);
                 if (officesEntity == null)
                 {
-                    _logger.LogError($"customers with number: {OfficesCode}, hasn't been found in db.");
+                    _logger.LogError($"offices with code: {OfficesID}, hasn't been found in db.");
                     return NotFound();
                 }
-                _mapper.Map(offices, officesEntity);
-                _repository.Offices.UpdateOffices(officesEntity);
+                 _mapper.Map(offices, officesEntity);
+                await _repository.Offices.UpdateOffices(officesEntity);
                 _repository.Save();
-                return NoContent();
+                return Ok(officesEntity);
             }
             catch (Exception ex)
             {
-                _logger.LogError($"Something went wrong inside UpdateCustomers action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                _logger.LogError($"Something went wrong inside UpdateOffices action: {ex.Message}");
+                return StatusCode(500, $"Something went wrong inside UpdateOffices action: {ex.Message}");
             }
         }
+        [HttpGet]
+        public IActionResult GetAllOffices()
+        {
+            try
+            {
+                var offices =  _repository.Offices.GetAllOffices();
+                _logger.LogInfo($"Returned all offices from database.");
+                var officesResult = _mapper.Map<IEnumerable<OfficesDto>>(offices);
+                return Ok(officesResult);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetAllOffices action: {ex.Message}");
+                return StatusCode(500, $"Something went wrong inside GetAllOffices action: {ex.Message}");
+            }
+        }
+        
+
+        [HttpGet("{ofcode}")]
+        public async Task<IActionResult> GetOfficesByOfficesCode(int OfficesID)
+        {
+            try
+            {
+                var office = await _repository.Offices.GetOfficesByOfficesCode(OfficesID);
+                if (office == null)
+                {
+                    _logger.LogError($"office with code: {OfficesID}, hasn't been found in db."); 
+                    return NotFound();
+                }
+                else
+                {
+                    _logger.LogInfo($"Returned office with id: {OfficesID}");
+                    var officeResult = _mapper.Map<OfficesDto>(office);
+                    return Ok(officeResult);
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside GetOfficesByOfficesCode action: {ex.Message}");
+                return StatusCode(500, $"Something went wrong inside GetOfficesByOfficesCode action: {ex.Message}");
+            }
+        }
+
     }
 }

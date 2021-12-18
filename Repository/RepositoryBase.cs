@@ -6,6 +6,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using Store;
 using Entities.Models;
+using System.Threading.Tasks;
 
 namespace Repository
 {
@@ -23,7 +24,7 @@ namespace Repository
         }
         public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression)
         {
-            return this.RepositoryContext.Set<T>().Where(expression).AsNoTracking();
+            return this.RepositoryContext.Set<T>().Where(expression);
         }
         public void Create(T entity)
         {

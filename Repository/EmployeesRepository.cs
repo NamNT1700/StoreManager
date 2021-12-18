@@ -1,9 +1,12 @@
 ﻿using Entities;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
 using Store;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace Repository
 {
@@ -13,10 +16,17 @@ namespace Repository
             : base(repositoryContext)
         {
         }
-
-        public void CreateEmployees(Employees employees)
+        public IEnumerable<Employees> GetAllEmployees()
         {
-            Create(employees);
+            return FindAll()
+                .OrderBy(o => o.EmployeeId)
+                .ToList();
+        }
+       
+        public async Task CreateEmployees(Employees employees)
+        {
+           
+           await Task.Run(()=>Create(employees));
         }
 
         public void DeleteEmployees(Employees employees)
@@ -24,9 +34,15 @@ namespace Repository
             Delete(employees);
         }
 
-        public void UpdateEmployees(Employees employees)
+        public async Task<Employees> GetEmployeeByNumber(int employeeID)
         {
-            Update(employees);
+            return await  FindByCondition(em => em.EmployeeId.Equals(employeeID))
+           .FirstOrDefaultAsync();
+        }
+
+        public async Task UpdateEmployees(Employees employees)
+        {
+            await Task.Run(() => Update(employees));
         }
     }
 }

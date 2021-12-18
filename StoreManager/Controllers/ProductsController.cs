@@ -26,10 +26,10 @@ namespace StoreManager.Controllers
             _mapper = mapper;
         }
         [HttpPost]
-        public IActionResult CreateProduct([FromBody] ProductForCreationDto product)
+        public async Task<IActionResult> CreateProduct([FromBody] ProductForCreationDto product)
         {
 
-            try
+             try
             {
                 if (product == null)
                 {
@@ -43,19 +43,52 @@ namespace StoreManager.Controllers
                     return BadRequest("Invalid model object");
                 }
 
-                var productEntity = _mapper.Map<Products>(product);
+                var productEntity =  _mapper.Map<Products>(product);
 
-                _repository.Products.CreateProducts(productEntity);
+                await _repository.Products.CreateProducts(productEntity);
                 _repository.Save();
 
-                var createdProduct = _mapper.Map<ProductDto>(productEntity);
+                var createdProduct =  _mapper.Map<ProductDto>(productEntity);
 
                 return Ok(createdProduct);
             }
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside CreateProduct action: {ex.Message}");
-                return StatusCode(500, "Internal server error");
+                return StatusCode(500, $"Something went wrong inside CreateProduct action: {ex.Message}");
+            }
+        }
+
+        [HttpPut("{productCode}")]
+        public async Task<IActionResult> UpdateProducts(Guid productCode, [FromBody] ProductForCreationDto product)
+        {
+            try
+            {
+                if (product == null)
+                {
+                    _logger.LogError("product object sent from client is null.");
+                    return BadRequest("product object is null");
+                }
+                if (!ModelState.IsValid)
+                {
+                    _logger.LogError("Invalid product object sent from client.");
+                    return BadRequest("Invalid model object");
+                }
+                var productEntity = await _repository.Products.GetProducttByCode(productCode);
+                if (productEntity == null)
+                {
+                    _logger.LogError($"product with code: {productCode}, hasn't been found in db.");
+                    return NotFound();
+                }
+                _mapper.Map(product, productEntity);
+                await _repository.Products.UpdateProducts(productEntity);
+                _repository.Save();
+                return Ok(productEntity);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"Something went wrong inside UpdateProducts action: {ex.Message}");
+                return StatusCode(500, $"Something went wrong inside UpdateProducts action: {ex.Message}");
             }
         }
     }

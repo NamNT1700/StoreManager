@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Entities.Models;
+using System.Threading.Tasks;
 
 namespace Store
 {
@@ -10,13 +11,12 @@ namespace Store
     {
 
         IEnumerable<Customers> GetAllCustomers();
-        Customers GetCumstomersByNumber(int CustumersNumber);
+        Task<Customers> GetCumstomersByID(int CustumersID);
         Customers GetCumstomersByPostalCode(Guid PostalCode);
-        Customers GetCustomersWithDetails(int CustumersNumber);
-        //int GetNumberForCustomers(Customers CustumersNumber);
+        Customers GetCustomersWithDetails(int CustumersID);
 
-        void CreateCustomers(Customers customers);
-        void UpdateCustomers(Customers customers);
+        Task CreateCustomers(Customers customers);
+        Task UpdateCustomers(Customers customers);
         void DeleteCustomers(Customers customers);
     }
 }
