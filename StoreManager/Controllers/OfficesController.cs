@@ -64,7 +64,6 @@ namespace StoreManager.Controllers
         {
             try
             {
-                var office = await _repository.Offices.GetEmployeesInOfficeAsync(OfficesID);
                 if (offices == null)
                 {
                     _logger.LogError("offices object sent from client is null.");
