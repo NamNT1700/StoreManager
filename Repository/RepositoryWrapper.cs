@@ -1,5 +1,5 @@
-﻿using Store;
-using Entities;
+﻿using Entities;
+using Store;
 namespace Repository
 {
     public class RepositoryWrapper : IRepositoryWrapper
@@ -7,11 +7,11 @@ namespace Repository
         public RepositoryContext _repoContext;
         public ICustomersRepository _customers;
         public IEmployeesRepository _employees;
-        public IOfficesRepository _offices ;
+        public IOfficesRepository _offices;
         public IOrderDetailsRepository _orderDetails;
         public IOrdersRepository _orders;
-        public IPaymentsRepository _payments ;
-        public IProductLinesRepository _productLines ;
+        public IPaymentsRepository _payments;
+        public IProductLinesRepository _productLines;
         public IProductsRepository _products;
         public ICustomersRepository Customers
         {
@@ -24,7 +24,8 @@ namespace Repository
                 return _customers;
             }
         }
-        public IEmployeesRepository Employees {
+        public IEmployeesRepository Employees
+        {
             get
             {
                 if (_employees == null)
@@ -34,7 +35,8 @@ namespace Repository
                 return _employees;
             }
         }
-        public IOfficesRepository Offices {
+        public IOfficesRepository Offices
+        {
             get
             {
                 if (_offices == null)
@@ -44,7 +46,8 @@ namespace Repository
                 return _offices;
             }
         }
-        public IOrderDetailsRepository OrderDetails {
+        public IOrderDetailsRepository OrderDetails
+        {
             get
             {
                 if (_orderDetails == null)
@@ -54,7 +57,8 @@ namespace Repository
                 return _orderDetails;
             }
         }
-        public IOrdersRepository Orders {
+        public IOrdersRepository Orders
+        {
             get
             {
                 if (_orders == null)
@@ -64,7 +68,8 @@ namespace Repository
                 return _orders;
             }
         }
-        public IPaymentsRepository Payments {
+        public IPaymentsRepository Payments
+        {
             get
             {
                 if (_payments == null)
@@ -74,7 +79,8 @@ namespace Repository
                 return _payments;
             }
         }
-        public IProductLinesRepository ProductLines {
+        public IProductLinesRepository ProductLines
+        {
             get
             {
                 if (_productLines == null)
@@ -84,7 +90,8 @@ namespace Repository
                 return _productLines;
             }
         }
-        public IProductsRepository Products {
+        public IProductsRepository Products
+        {
             get
             {
                 if (_products == null)

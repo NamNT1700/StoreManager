@@ -1,22 +1,17 @@
 ﻿using AutoMapper;
-using Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Entities;
 using Entities.DataTransferObjects;
-using Entities.DataTransferObjects.OfficesDTO;
-using Entities.DataTransferObjects.OrdersDTO;
 using Entities.DataTransferObjects.EmployeesDTO;
-using Entities.DataTransferObjects.ProductLinesDTO;
+using Entities.DataTransferObjects.OfficesDTO;
+using Entities.DataTransferObjects.OrdersDetailsDTO;
+using Entities.DataTransferObjects.OrdersDTO;
 using Entities.DataTransferObjects.PaymentDTO;
 using Entities.DataTransferObjects.ProductDTO;
-using Entities.DataTransferObjects.OrdersDetailsDTO;
+using Entities.DataTransferObjects.ProductLinesDTO;
+using Entities.Models;
 
 namespace StoreManager
 {
-    public class MappingProfile: Profile
+    public class MappingProfile : Profile
     {
         public MappingProfile()
         {

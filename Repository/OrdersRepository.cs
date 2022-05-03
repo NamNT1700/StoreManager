@@ -1,12 +1,10 @@
 ﻿using Entities;
-using Store;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Entities.Models;
+using Microsoft.EntityFrameworkCore;
+using Store;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 
 namespace Repository
 {
@@ -19,7 +17,7 @@ namespace Repository
 
         public async Task CreateOrders(Orders orders)
         {
-          await Task.Run(()=>  Create(orders));
+            await Task.Run(() => Create(orders));
         }
 
         public void DeleteOrders(Orders orders)

@@ -1,8 +1,4 @@
-﻿using Entities.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Entities.DataTransferObjects.EmployeesDTO
 {
@@ -24,7 +20,7 @@ namespace Entities.DataTransferObjects.EmployeesDTO
         public string ReportsTo { get; set; }
         [Required(ErrorMessage = "JobTitle is required")]
         public string JobTitle { get; set; }
-      
+
 
     }
 }

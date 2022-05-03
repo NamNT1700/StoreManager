@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using Entities.DataTransferObjects.PaymentDTO;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Store;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace StoreManager.Controllers
@@ -25,7 +22,7 @@ namespace StoreManager.Controllers
             _repository = repository;
             _mapper = mapper;
         }
-        [HttpPost]
+        [HttpPost("CreatePayment")]
         public async Task<IActionResult> CreatePayment([FromBody] PaymentForCreationDto payment)
         {
 

@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 
 namespace Entities.DataTransferObjects.ProductDTO
 {
@@ -25,6 +23,6 @@ namespace Entities.DataTransferObjects.ProductDTO
         public string BuyPrice { get; set; }
         [Required(ErrorMessage = "MSRP is required")]
         public string MSRP { get; set; }
-        
+
     }
 }

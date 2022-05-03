@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using Entities.DataTransferObjects.ProductLinesDTO;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Store;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace StoreManager.Controllers
@@ -25,7 +22,7 @@ namespace StoreManager.Controllers
             _repository = repository;
             _mapper = mapper;
         }
-        [HttpPost]
+        [HttpPost("CreateProductLines")]
         public async Task<IActionResult> CreateProductLines([FromBody] ProductLinesForCreationDto productLines)
         {
 
@@ -80,11 +77,11 @@ namespace StoreManager.Controllers
                     _logger.LogError($"product with Line: {productID}, hasn't been found in db.");
                     return NotFound();
                 }
-                  _mapper.Map(productLines, productLinesEntity);
-                 await _repository.ProductLines.UpdateProductLines(productLinesEntity);
-                 _repository.Save();
+                _mapper.Map(productLines, productLinesEntity);
+                await _repository.ProductLines.UpdateProductLines(productLinesEntity);
+                _repository.Save();
                 return Ok(productLinesEntity);
-             }
+            }
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside UpdateProductLines action: {ex.Message}");

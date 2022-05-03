@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using Entities.DataTransferObjects.ProductDTO;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Store;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace StoreManager.Controllers
@@ -25,11 +22,11 @@ namespace StoreManager.Controllers
             _repository = repository;
             _mapper = mapper;
         }
-        [HttpPost]
+        [HttpPost("CreateProduct")]
         public async Task<IActionResult> CreateProduct([FromBody] ProductForCreationDto product)
         {
 
-             try
+            try
             {
                 if (product == null)
                 {
@@ -43,12 +40,12 @@ namespace StoreManager.Controllers
                     return BadRequest("Invalid model object");
                 }
 
-                var productEntity =  _mapper.Map<Products>(product);
+                var productEntity = _mapper.Map<Products>(product);
 
                 await _repository.Products.CreateProducts(productEntity);
                 _repository.Save();
 
-                var createdProduct =  _mapper.Map<ProductDto>(productEntity);
+                var createdProduct = _mapper.Map<ProductDto>(productEntity);
 
                 return Ok(createdProduct);
             }

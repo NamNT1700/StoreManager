@@ -1,16 +1,12 @@
 ﻿using Entities;
-using Store;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Entities.Models;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Store;
+using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class ProductLinesRepository: RepositoryBase<ProductLines>, IProductLinesRepository
+    public class ProductLinesRepository : RepositoryBase<ProductLines>, IProductLinesRepository
     {
         public ProductLinesRepository(RepositoryContext repositoryContext)
             : base(repositoryContext)
@@ -19,7 +15,7 @@ namespace Repository
 
         public async Task CreateProductLines(ProductLines productLines)
         {
-            await Task.Run(()=> Create(productLines));
+            await Task.Run(() => Create(productLines));
         }
 
         public void DeleteProductLines(ProductLines productLines)

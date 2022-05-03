@@ -2,10 +2,8 @@
 using Entities.Models;
 using Microsoft.EntityFrameworkCore;
 using Store;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Repository
@@ -26,7 +24,7 @@ namespace Repository
 
         public async Task CreateOffices(Offices offices)
         {
-           await Task.Run(()=> Create(offices));
+            await Task.Run(() => Create(offices));
         }
 
         public void DeleteOffices(Offices offices)
@@ -43,7 +41,7 @@ namespace Repository
         public async Task UpdateOffices(Offices offices)
         {
 
-            await Task.Run(()=>  Update(offices));
+            await Task.Run(() => Update(offices));
         }
 
         public async Task<Offices> GetEmployeesInOfficeAsync(int OfficesID)

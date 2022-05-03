@@ -1,16 +1,12 @@
 ﻿using Entities;
-using Store;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Entities.Models;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Store;
+using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class PaymentsRepository: RepositoryBase<Payments>, IPaymentsRepository
+    public class PaymentsRepository : RepositoryBase<Payments>, IPaymentsRepository
     {
         public PaymentsRepository(RepositoryContext repositoryContext)
             : base(repositoryContext)
@@ -19,7 +15,7 @@ namespace Repository
 
         public async Task CreatePayments(Payments payments)
         {
-          await Task.Run(()=>  Create(payments));
+            await Task.Run(() => Create(payments));
         }
 
         public void DeletePayments(Payments payments)

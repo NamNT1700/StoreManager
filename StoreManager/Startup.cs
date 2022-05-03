@@ -1,21 +1,16 @@
-using Store;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpOverrides;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using NLog;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
-using StoreManager.Extensions;
-using Microsoft.AspNetCore.Http;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using NLog;
+using StoreManager.Extensions;
+using System;
+using System.IO;
 
 namespace StoreManager
 {
@@ -39,7 +34,8 @@ namespace StoreManager
             services.ConfigureMySqlContext(Configuration);
             services.ConfigureRepositoryWrapper();
             services.AddControllers();
-            services.AddSwaggerGen(c => {
+            services.AddSwaggerGen(c =>
+            {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
                     Title = "LicenseManager API",
@@ -74,6 +70,23 @@ namespace StoreManager
                 c.IncludeXmlComments(filePath);
                 c.MapType(typeof(IFormFile), () => new OpenApiSchema() { Type = "file", Format = "binary" });
             });
+            services.AddAuthentication("Bearer")
+          .AddJwtBearer("Bearer", options =>
+          {
+              options.Authority = "https://localhost:55453";
+              options.TokenValidationParameters = new TokenValidationParameters
+              {
+                  ValidateAudience = false
+              };
+          });
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("ApiScope", policy =>
+                {
+                    policy.RequireAuthenticatedUser();
+                    policy.RequireClaim("scope", "API");
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,19 +105,21 @@ namespace StoreManager
             });
 
             app.UseRouting();
-
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseSwagger();
 
-            app.UseSwaggerUI(c => {
+            app.UseSwaggerUI(c =>
+            {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "LicenseManager API V1");
                 c.RoutePrefix = "swagger";
             });
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints.MapControllers()
+                .RequireAuthorization("ApiScope");
             });
         }
     }

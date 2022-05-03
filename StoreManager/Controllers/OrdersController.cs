@@ -2,12 +2,9 @@
 using Entities.DataTransferObjects;
 using Entities.DataTransferObjects.OrdersDTO;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Store;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace StoreManager.Controllers
@@ -26,7 +23,7 @@ namespace StoreManager.Controllers
             _repository = repository;
             _mapper = mapper;
         }
-        [HttpPost]
+        [HttpPost("CreateOrders")]
         public async Task<IActionResult> CreateOrders([FromBody] OrdersForCreationDto orders)
         {
 

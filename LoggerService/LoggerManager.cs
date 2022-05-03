@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using NLog;
+﻿using NLog;
 using Store;
 
 namespace LoggerService
 {
-    public class LoggerManager: ILoggerManager
+    public class LoggerManager : ILoggerManager
     {
         private static readonly ILogger logger = LogManager.GetCurrentClassLogger();
         public void LogDebug(string message)

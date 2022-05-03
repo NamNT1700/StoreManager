@@ -1,14 +1,9 @@
-﻿using LoggerService;
+﻿using Entities;
+using LoggerService;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
-using Entities.Models;
-using Entities;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Repository;
 using Store;
 
@@ -18,7 +13,8 @@ namespace StoreManager.Extensions
     {
         public static void ConfigureCors(this IServiceCollection services)
         {
-            services.AddCors(options => {
+            services.AddCors(options =>
+            {
                 options.AddPolicy("CorsPolicy",
                     builder => builder
                     .SetIsOriginAllowed(_ => true)
@@ -49,11 +45,11 @@ namespace StoreManager.Extensions
         {
 
             services.AddScoped<IRepositoryWrapper, RepositoryWrapper>();
-        //    services.AddSingleton<IRepositoryWrapper, RepositoryWrapper>();
-        //    services.AddTransient<IRepositoryWrapper, RepositoryWrapper>();
-        //    services.AddScoped<IAccountRepository, AccountRepository>();
-        //    services.AddSingleton<Contracts.IOwnerRepository, Contracts.IOwnerRepository>();
-        
+            //    services.AddSingleton<IRepositoryWrapper, RepositoryWrapper>();
+            //    services.AddTransient<IRepositoryWrapper, RepositoryWrapper>();
+            //    services.AddScoped<IAccountRepository, AccountRepository>();
+            //    services.AddSingleton<Contracts.IOwnerRepository, Contracts.IOwnerRepository>();
+
         }
     }
 }

@@ -1,13 +1,11 @@
 ﻿using AutoMapper;
 using Entities.DataTransferObjects.OfficesDTO;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Store;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace StoreManager.Controllers
@@ -26,8 +24,8 @@ namespace StoreManager.Controllers
             _repository = repository;
             _mapper = mapper;
         }
-        [HttpPost]
-        public async Task<IActionResult>  CreateOffice([FromBody] OfficesForCreationDto offices)
+        [HttpPost("CreateOffice")]
+        public async Task<IActionResult> CreateOffice([FromBody] OfficesForCreationDto offices)
         {
 
             try
@@ -46,7 +44,7 @@ namespace StoreManager.Controllers
 
                 var officesEntity = _mapper.Map<Offices>(offices);
 
-               await _repository.Offices.CreateOffices(officesEntity);
+                await _repository.Offices.CreateOffices(officesEntity);
                 _repository.Save();
 
                 var createdOffices = _mapper.Map<OfficesDto>(officesEntity);
@@ -80,7 +78,7 @@ namespace StoreManager.Controllers
                     _logger.LogError($"offices with code: {OfficesID}, hasn't been found in db.");
                     return NotFound();
                 }
-                 _mapper.Map(offices, officesEntity);
+                _mapper.Map(offices, officesEntity);
                 await _repository.Offices.UpdateOffices(officesEntity);
                 _repository.Save();
                 return Ok(officesEntity);
@@ -92,11 +90,12 @@ namespace StoreManager.Controllers
             }
         }
         [HttpGet]
+        [Authorize(Roles = "User")]
         public IActionResult GetAllOffices()
         {
             try
             {
-                var offices =  _repository.Offices.GetAllOffices();
+                var offices = _repository.Offices.GetAllOffices();
                 _logger.LogInfo($"Returned all offices from database.");
                 var officesResult = _mapper.Map<IEnumerable<OfficesDto>>(offices);
                 return Ok(officesResult);
@@ -107,9 +106,9 @@ namespace StoreManager.Controllers
                 return StatusCode(500, $"Something went wrong inside GetAllOffices action: {ex.Message}");
             }
         }
-        
 
-        [HttpGet("{ofcode}")]
+
+        [HttpGet("{OfficesID}")]
         public async Task<IActionResult> GetOfficesByOfficesCode(int OfficesID)
         {
             try
@@ -117,7 +116,7 @@ namespace StoreManager.Controllers
                 var office = await _repository.Offices.GetOfficesByOfficesCode(OfficesID);
                 if (office == null)
                 {
-                    _logger.LogError($"office with code: {OfficesID}, hasn't been found in db."); 
+                    _logger.LogError($"office with code: {OfficesID}, hasn't been found in db.");
                     return NotFound();
                 }
                 else

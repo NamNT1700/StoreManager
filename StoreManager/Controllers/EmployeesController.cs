@@ -1,12 +1,9 @@
 ﻿using AutoMapper;
 using Entities.DataTransferObjects.EmployeesDTO;
 using Entities.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Store;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace StoreManager.Controllers
@@ -25,7 +22,7 @@ namespace StoreManager.Controllers
             _repository = repository;
             _mapper = mapper;
         }
-        [HttpPost]
+        [HttpPost("CreateEmployees")]
         public async Task<IActionResult> CreateEmployees([FromBody] EmployeesForCreationDto employees)
         {
 
@@ -45,10 +42,10 @@ namespace StoreManager.Controllers
 
                 var employeesEntity = _mapper.Map<Employees>(employees);
 
-               await _repository.Employees.CreateEmployees(employeesEntity);
+                await _repository.Employees.CreateEmployees(employeesEntity);
 
                 _repository.Save();
-                
+
                 var createdEmployees = _mapper.Map<EmployeesDto>(employeesEntity);
 
                 return Ok(createdEmployees);
@@ -80,7 +77,7 @@ namespace StoreManager.Controllers
                     _logger.LogError($"employees with number: {employeeID}, hasn't been found in db.");
                     return NotFound();
                 }
-                 _mapper.Map(employees, employeesEntity);
+                _mapper.Map(employees, employeesEntity);
                 await _repository.Employees.UpdateEmployees(employeesEntity);
                 _repository.Save();
                 return Ok(employeesEntity);

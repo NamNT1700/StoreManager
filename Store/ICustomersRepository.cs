@@ -1,13 +1,11 @@
-﻿using Store;
+﻿using Entities.Models;
 using System;
 using System.Collections.Generic;
-using System.Text;
-using Entities.Models;
 using System.Threading.Tasks;
 
 namespace Store
 {
-    public interface ICustomersRepository: IRepositoryBase<Customers>
+    public interface ICustomersRepository : IRepositoryBase<Customers>
     {
 
         IEnumerable<Customers> GetAllCustomers();

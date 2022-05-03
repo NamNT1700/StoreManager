@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Entities.Models;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
-using Entities.Models;
 
 namespace Store
 {
-    public interface IOrdersRepository: IRepositoryBase<Orders>
+    public interface IOrdersRepository : IRepositoryBase<Orders>
     {
         IEnumerable<Orders> OrdersByCustomers(int customersNumber);
         Task CreateOrders(Orders orders);

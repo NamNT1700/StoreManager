@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Entities.Models;
 using System.Threading.Tasks;
-using Entities.Models;
 
 namespace Store
 {
-    public interface IProductLinesRepository: IRepositoryBase<ProductLines>
+    public interface IProductLinesRepository : IRepositoryBase<ProductLines>
     {
         Task CreateProductLines(ProductLines productLines);
         Task UpdateProductLines(ProductLines productLines);

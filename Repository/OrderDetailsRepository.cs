@@ -1,16 +1,12 @@
 ﻿using Entities;
-using Store;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Entities.Models;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Store;
+using System.Threading.Tasks;
 
 namespace Repository
 {
-    public class OrderDetailsRepository: RepositoryBase<OrderDetails>, IOrderDetailsRepository
+    public class OrderDetailsRepository : RepositoryBase<OrderDetails>, IOrderDetailsRepository
     {
         public OrderDetailsRepository(RepositoryContext repositoryContext)
             : base(repositoryContext)
@@ -19,7 +15,7 @@ namespace Repository
 
         public async Task CreateOrderDetails(OrderDetails orderDetails)
         {
-           await Task.Run(()=> Create(orderDetails));
+            await Task.Run(() => Create(orderDetails));
         }
 
         public void DeleteOrderDetails(OrderDetails orderDetails)

@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Entities.Models;
 using System.Threading.Tasks;
-using Entities.Models;
 
 namespace Store
 {
-    public interface IPaymentsRepository: IRepositoryBase<Payments>
+    public interface IPaymentsRepository : IRepositoryBase<Payments>
     {
         Task CreatePayments(Payments payments);
         Task UpdatePayments(Payments payments);
