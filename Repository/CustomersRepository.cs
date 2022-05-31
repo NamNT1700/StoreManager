@@ -13,7 +13,8 @@ namespace Repository
     {
 
 
-        public CustomersRepository(RepositoryContext repositoryContext)
+        public CustomersRepository(RepositoryContext   
+            repositoryContext)
             : base(repositoryContext)
         {
         }
@@ -45,7 +46,7 @@ namespace Repository
         }
 
         public Customers GetCumstomersByPostalCode(Guid PostalCode)
-        {
+        {        
             return FindByCondition(customers => customers.PostalCode.Equals(PostalCode))
            .FirstOrDefault();
         }

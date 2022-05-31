@@ -11,7 +11,7 @@ namespace Store
         void DeleteOffices(Offices offices);
         Task<Offices> GetOfficesByOfficesCode(int OfficesID);
         IEnumerable<Offices> GetAllOffices();
-        Task<Offices> GetEmployeesInOfficeAsync(int OfficesID);
+        Task<Offices> FindOfficeByIdAsync(int OfficesID);
 
 
     }

@@ -1,0 +1,38 @@
+version: '3.4'
+
+services:
+  storemanager:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "2002:80"
+
+  identityconfigurationsample:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "2001:80"
+
+
+  server.identity:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "2000:80"
+
+  mysql:
+    cap_add:
+      - SYS_NICE
+    restart: always
+    environment:
+      - MYSQL_DATABASE=quotes
+      - MYSQL_ROOT_PASSWORD=Abc@1234
+    ports:
+      - '3307:3306'
+    volumes:
+      - db:/var/lib/mysql
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+
+volumes:
+  db:
+    driver: local

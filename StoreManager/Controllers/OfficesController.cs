@@ -39,7 +39,7 @@ namespace StoreManager.Controllers
                 if (!ModelState.IsValid)
                 {
                     _logger.LogError("Invalid offices object sent from client.");
-                    return BadRequest("Invalid model object");
+                     return BadRequest("Invalid model object");
                 }
 
                 var officesEntity = _mapper.Map<Offices>(offices);
@@ -57,7 +57,7 @@ namespace StoreManager.Controllers
                 return StatusCode(500, $"Something went wrong inside CreateOffices action: {ex.Message}");
             }
         }
-        [HttpPut("{OfficesID}")]
+        [HttpPut("Office")]
         public async Task<IActionResult> UpdateOffices(int OfficesID, [FromBody] OfficesForUpdateDto offices)
         {
             try
@@ -89,8 +89,8 @@ namespace StoreManager.Controllers
                 return StatusCode(500, $"Something went wrong inside UpdateOffices action: {ex.Message}");
             }
         }
-        [HttpGet]
-        [Authorize(Roles = "User")]
+        [HttpGet("AllOffices")]
+        //[Authorize(Roles = "Admin")]
         public IActionResult GetAllOffices()
         {
             try
@@ -108,12 +108,12 @@ namespace StoreManager.Controllers
         }
 
 
-        [HttpGet("{OfficesID}")]
+        [HttpGet("Office")]
         public async Task<IActionResult> GetOfficesByOfficesCode(int OfficesID)
         {
             try
             {
-                var office = await _repository.Offices.GetOfficesByOfficesCode(OfficesID);
+                var office = await _repository.Offices.FindOfficeByIdAsync(OfficesID);
                 if (office == null)
                 {
                     _logger.LogError($"office with code: {OfficesID}, hasn't been found in db.");

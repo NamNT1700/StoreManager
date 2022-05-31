@@ -56,7 +56,7 @@ namespace StoreManager.Controllers
             }
         }
 
-        [HttpPut("{customerID}")]
+        [HttpPut("Payment")]
         public async Task<IActionResult> UpdatePayments(int customerID, [FromBody] PaymentForUpdateDto payment)
         {
             try

@@ -15,7 +15,7 @@ namespace StoreManager.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.12");
+                .HasAnnotation("ProductVersion", "5.0.13");
 
             modelBuilder.Entity("Entities.Models.Customers", b =>
                 {
@@ -97,7 +97,7 @@ namespace StoreManager.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
-                    b.Property<int>("OfficeIdFK")
+                    b.Property<int>("OfficeId")
                         .HasColumnType("int");
 
                     b.Property<string>("ReportsTo")
@@ -106,7 +106,7 @@ namespace StoreManager.Migrations
 
                     b.HasKey("EmployeeId");
 
-                    b.HasIndex("OfficeIdFK");
+                    b.HasIndex("OfficeId");
 
                     b.ToTable("employees");
                 });
@@ -314,7 +314,7 @@ namespace StoreManager.Migrations
 
                     b.HasOne("Entities.Models.Offices", "Offices")
                         .WithMany("Employees")
-                        .HasForeignKey("OfficeIdFK")
+                        .HasForeignKey("OfficeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

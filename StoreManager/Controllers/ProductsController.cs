@@ -56,7 +56,7 @@ namespace StoreManager.Controllers
             }
         }
 
-        [HttpPut("{productCode}")]
+        [HttpPut("Product")]
         public async Task<IActionResult> UpdateProducts(Guid productCode, [FromBody] ProductForCreationDto product)
         {
             try

@@ -19,6 +19,7 @@ namespace Repository
         {
             return FindAll()
                 .OrderBy(o => o.OfficeId)
+                .Include(e => e.Employees)
                 .ToList();
         }
 
@@ -44,7 +45,7 @@ namespace Repository
             await Task.Run(() => Update(offices));
         }
 
-        public async Task<Offices> GetEmployeesInOfficeAsync(int OfficesID)
+        public async Task<Offices> FindOfficeByIdAsync(int OfficesID)
         {
             return await FindByCondition(x => x.OfficeId.Equals(OfficesID)).Include(x => x.Employees).FirstOrDefaultAsync();
 

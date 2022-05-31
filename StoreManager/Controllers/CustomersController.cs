@@ -56,7 +56,7 @@ namespace StoreManager.Controllers
             }
         }
 
-        [HttpPut("{customerID}")]
+        [HttpPut("Customer")]
         public async Task<IActionResult> UpdateCustomer(int customerID, [FromBody] CustomersForUpdateDto customer)
         {
             try

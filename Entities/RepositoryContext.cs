@@ -25,8 +25,8 @@ namespace Entities
             modelBuilder.Entity<Employees>(Employees =>
             {
                 Employees.HasKey(x => x.EmployeeId);
-                Employees.HasOne(y => y.Offices).WithMany(y => y.Employees).HasForeignKey(z => z.OfficeIdFK);
-                Employees.HasOne(x => x.EmployeesBoss).WithMany(y => y.EmployeesOfMine).HasForeignKey(z => z.EmployeeId);
+                Employees.HasOne(y => y.Offices).WithMany(y => y.Employees).HasForeignKey(z => z.OfficeId);
+               // Employees.HasOne(x => x.EmployeesBoss).WithMany(y => y.EmployeesOfMine).HasForeignKey(z => z.EmployeeId);
 
             });
             modelBuilder.Entity<Customers>(Customers =>
@@ -37,7 +37,7 @@ namespace Entities
             modelBuilder.Entity<Offices>(Offices =>
             {
                 Offices.HasKey(x => x.OfficeId);
-                Offices.HasMany(x => x.Employees).WithOne(y => y.Offices).HasForeignKey(z => z.OfficeIdFK);
+                Offices.HasMany(x => x.Employees).WithOne(y => y.Offices).HasForeignKey(z => z.OfficeId);
             });
 
             modelBuilder.Entity<OrderDetails>(OrderDetails =>

@@ -52,11 +52,11 @@ namespace StoreManager.Controllers
             catch (Exception ex)
             {
                 _logger.LogError($"Something went wrong inside CreateProductLines action: {ex.Message}");
-                return StatusCode(500, "Something went wrong inside CreateProductLines action: {ex.Message}");
+                return StatusCode(500, $"Something went wrong inside CreateProductLines action: {ex.Message}");
             }
         }
 
-        [HttpPut("{productID}")]
+        [HttpPut("ProductLines")]
         public async Task<IActionResult> UpdateProductLines(int productID, [FromBody] ProductLinesForCreationDto productLines)
         {
             try

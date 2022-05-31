@@ -23,7 +23,7 @@ namespace StoreManager.Controllers
             _repository = repository;
             _mapper = mapper;
         }
-        [HttpPost("CreateOrders")]
+        [HttpPost("CreateOrder")]
         public async Task<IActionResult> CreateOrders([FromBody] OrdersForCreationDto orders)
         {
 
@@ -57,7 +57,7 @@ namespace StoreManager.Controllers
             }
         }
 
-        [HttpPut("{orderNumber}")]
+        [HttpPut("Order")]
         public async Task<IActionResult> UpdateOrder(int orderNumber, [FromBody] OrdersForUpdateDto order)
         {
             try

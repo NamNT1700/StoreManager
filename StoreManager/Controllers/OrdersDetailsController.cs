@@ -56,7 +56,7 @@ namespace StoreManager.Controllers
             }
         }
 
-        [HttpPut("{orderNumber}")]
+        [HttpPut("OrderDetails")]
         public async Task<IActionResult> UpdateOrderDetails(int orderNumber, [FromBody] OrderDetailsForUpdateDto orderdetail)
         {
             try

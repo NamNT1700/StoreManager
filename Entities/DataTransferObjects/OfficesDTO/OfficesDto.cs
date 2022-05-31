@@ -1,6 +1,8 @@
-﻿using Entities.Models;
+﻿using Entities.DataTransferObjects.EmployeesDTO;
+using Entities.Models;
 using System;
 using System.Collections.Generic;
+using System.Text.Json.Serialization;
 
 namespace Entities.DataTransferObjects.OfficesDTO
 {
@@ -15,7 +17,7 @@ namespace Entities.DataTransferObjects.OfficesDTO
         public string Country { get; set; }
         public Guid PostalCode { get; set; }
         public string Territory { get; set; }
-
-        virtual public ICollection<Employees> Employees { get; set; }
+        //[JsonIgnore]
+        public ICollection<EmployeeInfoDto> Employees { get; set; }
     }
 }

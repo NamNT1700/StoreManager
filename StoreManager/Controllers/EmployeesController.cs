@@ -56,7 +56,7 @@ namespace StoreManager.Controllers
                 return StatusCode(500, $"Something went wrong inside CreateEmployees action: {ex.Message}");
             }
         }
-        [HttpPut("{employeeID}")]
+        [HttpPut("Employee")]
         public async Task<IActionResult> UpdateEmployees(int employeeID, [FromBody] EmployeesForUpdateDto employees)
         {
             try

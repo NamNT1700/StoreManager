@@ -5,9 +5,6 @@ namespace Entities.DataTransferObjects.EmployeesDTO
 {
     public class EmployeesDto
     {
-
-
-
         public int EmployeeId { get; set; }
 
         public string LastName { get; set; }
@@ -16,12 +13,12 @@ namespace Entities.DataTransferObjects.EmployeesDTO
         public string Extension { get; set; }
 
         public string Email { get; set; }
-        public int OfficeIdFK { get; set; }
+        public int OfficeId { get; set; }
         public string ReportsTo { get; set; }
         public string JobTitle { get; set; }
-        virtual public Offices Offices { get; set; }
-        virtual public Employees EmployeesBoss { get; set; }
-        virtual public ICollection<Employees> EmployeesOfMine { get; set; }
+        public Offices Offices { get; set; }
+        public Employees EmployeesBoss { get; set; }
+        public ICollection<Employees> EmployeesOfMine { get; set; }
         public ICollection<Customers> Customers { get; set; }
 
     }

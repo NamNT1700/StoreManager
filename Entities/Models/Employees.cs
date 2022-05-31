@@ -18,14 +18,14 @@ namespace Entities.Models
         [Required(ErrorMessage = "Email is required")]
         public string Email { get; set; }
         [Required(ErrorMessage = "OfficeCode is required")]
-        public int OfficeIdFK { get; set; }
+        public int OfficeId { get; set; }
         [Required(ErrorMessage = "Reports to some one is required")]
         public string ReportsTo { get; set; }
         [Required(ErrorMessage = "JobTitle is required")]
         public string JobTitle { get; set; }
         virtual public Offices Offices { get; set; }
-        virtual public Employees EmployeesBoss { get; set; }
-        virtual public ICollection<Employees> EmployeesOfMine { get; set; }
+        //virtual public Employees EmployeesBoss { get; set; }
+        //virtual public ICollection<Employees> EmployeesOfMine { get; set; }
         public ICollection<Customers> Customers { get; set; }
     }
 }

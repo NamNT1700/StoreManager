@@ -7,7 +7,7 @@ namespace Store
 {
     public interface ICustomersRepository : IRepositoryBase<Customers>
     {
-
+       // string a { get; set; }
         IEnumerable<Customers> GetAllCustomers();
         Task<Customers> GetCumstomersByID(int CustumersID);
         Customers GetCumstomersByPostalCode(Guid PostalCode);
